@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
     # Local apps 
     "tracks.apps.TracksConfig",
-    "api.apps.Apiconfig",
+    "api.apps.ApiConfig",
 
 
 ]
