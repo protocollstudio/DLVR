@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>DLVR</title>
+</head>
+<body>
+    <h1>DLVR</h1>
+    <h2>All tracks</h2>
+    {% for track in track_list %}
+    <ul>
+        <li>Title: {{ track.title }}</li>
+        <li>URL: {{ track.url }}</li>
+    </ul>
+    <img src=" {{ track.artwork }}">
+    {% endfor %}
+    
+</body>
+</html>
