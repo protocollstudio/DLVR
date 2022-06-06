@@ -1,11 +1,8 @@
 <script>
-  import logo from './assets/svelte.png'
-  import Counter from './lib/Counter.svelte'
-
 
   let tracks = [
-    { "title": "One way around", "url": "http://localhost:4000/public/tracks/one-way-around.mp3", "path": "public/tracks/one-way-around.mp3" },
-    { "title": "My love is bread", "url": "http://localhost:4000/public/tracks/my-love-is-bread.mp3", "path": "public/tracks/my-love-is-bread.mp3" }
+    { "title": "One way around", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", "path": "public/tracks/one-way-around.mp3" },
+    { "title": "My love is bread", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", "path": "public/tracks/my-love-is-bread.mp3" }
   ]
 
   let currentTrack = tracks[0]
@@ -23,10 +20,9 @@
         console.log(data)
       })*/
       console.log("Track deleted " + path)
-      currentTrack = ({ "title": "So much juice in here", "url": "http://localhost:4000/public/tracks/juice.mp3", "path": "public/tracks/juice.mp3" })
-
+      currentTrack = ({ "title": "So much juice in here", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", "path": "public/tracks/juice.mp3" })
+      changeCurrentTime()
   }
-
 
   // when called make a get request to api/tracks/ and return the tracks
   const getTracks = () => {
@@ -42,8 +38,19 @@
       })*/
       console.log("Tracks fetched")
       // append on top of the tracks array
-      currentTrack = ({ "title": "So much juice in here", "url": "http://localhost:4000/public/tracks/juice.mp3", "path": "public/tracks/juice.mp3" })
+      currentTrack = ({ "title": "So much juice in here", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", "path": "public/tracks/juice.mp3" })
+      changeCurrentTime()
   }
+
+  // web called change media element current time
+  const changeCurrentTime = () => {
+    console.log("Current time changed")
+    // change current time of media element
+    let mediaElement = document.getElementById('current-track');
+    mediaElement.currentTime = 60; //Skips to 122 seconds into the song
+
+  }
+
 
 </script>
 
@@ -52,7 +59,7 @@
     <!--Only show the first track with a like and dislike button-->
     <div>
       <h1>{currentTrack.title}</h1>
-      <audio src={currentTrack.url} controls />
+      <audio id="current-track" src={currentTrack.url} controls autoplay/>
       <br>
       <!--on click call the getTracks function -->
       <button on:click={() => getTracks()} >Like</button>
