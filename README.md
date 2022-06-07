@@ -10,3 +10,5 @@ To launch the back
 > python manage.py runserver
 
 ## Front
+
+Svelte
