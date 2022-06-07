@@ -8,3 +8,8 @@ class TrackAPIView(generics.ListAPIView):
     queryset = Track.objects.all()
     serializer_class = TrackSerializer
 
+
+class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Track.objects.all()
+    serializer_class = TrackSerializer
+
