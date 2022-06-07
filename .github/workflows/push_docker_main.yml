@@ -1,6 +1,9 @@
 name: dlvr-build-master-container
 on: 
-workflow_dispatch:
+  push: 
+    branches: 
+      - "main"
+  workflow_dispatch:
   jobs:
     push_to_registry:
       name: push docker image to docker hub
