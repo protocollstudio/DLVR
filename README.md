@@ -11,7 +11,10 @@ To launch the back
 
 
 Routes 
-api/tracks
+api/tracks : liste les tracks
+api/tracks/1 : détails d'une track
+api/tracks/1/like : ajoute un like
+api/tracks/1/dislike : ajoute un dislike
 
 
 ## Front
