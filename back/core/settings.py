@@ -128,18 +128,3 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # My settings
-REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-    ]
-}
-
-STATIC_URL = "/static/"
-STATICFILES_DIR = BASE_DIR / "static"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_FINDERS = [
-        "django.contrib.staticfiles.finders.FileSystemFinder",
-        "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-        ]
-
-
