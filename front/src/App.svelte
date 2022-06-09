@@ -1,12 +1,9 @@
 <script>
+	import { onMount } from "svelte";
 
-  let tracks = [
-    { "title": "One way around", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", "path": "public/tracks/one-way-around.mp3" },
-    { "title": "My love is bread", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", "path": "public/tracks/my-love-is-bread.mp3" }
-  ]
-
-  let currentTrack = tracks[0]
-
+  let apiUrl = "http://localhost:8000/api/"
+  let tracks = []
+  let currentTrack = []
   // when called make a DEL request to api/tracks/ with an object containing the track path
   const deleteTrack = (path) => {
     /*fetch(`http://localhost:4000/api/tracks/${path}`, {
@@ -26,7 +23,7 @@
 
   // when called make a get request to api/tracks/ and return the tracks
   const getTracks = () => {
-    /*fetch(`http://localhost:4000/api/tracks/`, {
+    fetch(apiUrl + 'tracks', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -35,7 +32,7 @@
       .then(res => res.json())
       .then(data => {
         console.log(data)
-      })*/
+      })
       console.log("Tracks fetched")
       // append on top of the tracks array
       currentTrack = ({ "title": "So much juice in here", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", "path": "public/tracks/juice.mp3" })
@@ -51,20 +48,38 @@
 
   }
 
+  onMount(async () => {
+			await fetch(apiUrl + 'tracks')
+			.then(response => response.json())
+			.then(datas => {
+				console.log(datas);
+        datas.forEach(data => {
+          tracks = [data,...tracks]
+        }); 
+        console.log('track', tracks)
+			}).catch(error => {
+				console.log(error);
+				return [];
+			});
+  })
 
+  //console.log('currentTrack',currentTrack)
+  let display = true
 </script>
 
 <main>
-  {#if tracks}
-    <!--Only show the first track with a like and dislike button-->
-    <div>
-      <h1>{currentTrack.title}</h1>
-      <audio id="current-track" src={currentTrack.url} controls autoplay/>
-      <br>
-      <!--on click call the getTracks function -->
-      <button on:click={() => getTracks()} >Like</button>
-      <button on:click={() => deleteTrack(currentTrack.path)}>Dislike</button>
-    </div>
+  {#if display}
+    {tracks}
+    {#each tracks as track}
+        <div>
+          <h1>{track?.title}</h1>
+          <audio controls id="current-track">
+            <source src={track?.url} type="audio/mpeg">
+          </audio>
+          <button on:click={() => getTracks()} >Like</button>
+          <button on:click={() => deleteTrack(track?.path)}>Delete</button>
+        </div>
+    {/each}
 	{/if}
 </main>
 

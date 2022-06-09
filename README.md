@@ -9,6 +9,11 @@ To launch the back
 > python manage.py createsuperuser    
 > python manage.py runserver    
 
+
+Routes 
+api/tracks
+
+
 ## Front
 
 Svelte
