@@ -1,9 +1,14 @@
 <script>
 	import { onMount } from "svelte";
 
+  import { Swiper, SwiperSlide } from 'swiper/svelte';
+  import SwiperCore, { Mousewheel, Pagination } from 'swiper';
+  import 'swiper/css';
+  import 'swiper/css/pagination';
+  SwiperCore.use([Mousewheel, Pagination]);
+
   let apiUrl = "http://localhost:8000/api/"
   let tracks = []
-  let currentTrack = []
   // when called make a DEL request to api/tracks/ with an object containing the track path
   const deleteTrack = (path) => {
     /*fetch(`http://localhost:4000/api/tracks/${path}`, {
@@ -65,25 +70,33 @@
 
   //console.log('currentTrack',currentTrack)
   let display = true
+
 </script>
 
 <main>
   {#if display}
-    {tracks}
-    {#each tracks as track}
-        <div>
-          <h1>{track?.title}</h1>
-          <audio controls id="current-track">
-            <source src={track?.url} type="audio/mpeg">
-          </audio>
-          <button on:click={() => getTracks()} >Like</button>
-          <button on:click={() => deleteTrack(track?.path)}>Delete</button>
-        </div>
-    {/each}
+      <Swiper
+      spaceBetween={50}
+      slidesPerView={1}
+      on:slideChange={() => console.log('slide change')}
+      on:swiper={(e) => console.log(e.detail[0])}
+      >
+      {#each tracks as track, i}
+          <SwiperSlide>
+            <h1>{track.title}</h1>
+            <audio controls id="current-track">
+              <source src={track.url} type="audio/mpeg">
+            </audio>
+            <button class="has-pointer-event">Like</button>
+            <button class="has-pointer-event">Delete</button>
+          </SwiperSlide>
+      {/each}
+    </Swiper>
 	{/if}
 </main>
 
 <style>
+  
   :root {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -114,6 +127,32 @@
     max-width: 14rem;
     margin: 1rem auto;
     line-height: 1.35;
+  }
+
+  .has-pointer-event{
+    pointer-events:fill;
+  }
+
+  .swipe-holder{
+    height: 30vh;
+    width: 100%;
+  }
+  .track-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 80%;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  img{
+    max-width: 100%;
+    height: auto;
   }
 
   @media (min-width: 480px) {
