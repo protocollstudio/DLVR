@@ -1,9 +1,8 @@
 <script>
+	import { onMount } from "svelte";
 
-  let tracks = [
-    { "title": "One way around", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", "path": "public/tracks/one-way-around.mp3" },
-    { "title": "My love is bread", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", "path": "public/tracks/my-love-is-bread.mp3" }
-  ]
+  let apiUrl = "http://localhost:8000/api/"
+  let tracks = []
 
   let currentTrack = tracks[0]
 
@@ -26,7 +25,7 @@
 
   // when called make a get request to api/tracks/ and return the tracks
   const getTracks = () => {
-    /*fetch(`http://localhost:4000/api/tracks/`, {
+    fetch(apiUrl + 'tracks', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -35,7 +34,7 @@
       .then(res => res.json())
       .then(data => {
         console.log(data)
-      })*/
+      })
       console.log("Tracks fetched")
       // append on top of the tracks array
       currentTrack = ({ "title": "So much juice in here", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", "path": "public/tracks/juice.mp3" })
@@ -50,6 +49,20 @@
     mediaElement.currentTime = 60; //Skips to 122 seconds into the song
 
   }
+
+  onMount(async () => {
+			await fetch(apiUrl + 'tracks')
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+        tracks = [...tracks, data]
+        
+
+			}).catch(error => {
+				console.log(error);
+				return [];
+			});
+  })
 
 
 </script>
