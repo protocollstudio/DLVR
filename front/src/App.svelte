@@ -3,9 +3,7 @@
 
   let apiUrl = "http://localhost:8000/api/"
   let tracks = []
-
-  let currentTrack = tracks[0]
-
+  let currentTrack = []
   // when called make a DEL request to api/tracks/ with an object containing the track path
   const deleteTrack = (path) => {
     /*fetch(`http://localhost:4000/api/tracks/${path}`, {
@@ -53,31 +51,35 @@
   onMount(async () => {
 			await fetch(apiUrl + 'tracks')
 			.then(response => response.json())
-			.then(data => {
-				console.log(data);
-        tracks = [...tracks, data]
-        
-
+			.then(datas => {
+				console.log(datas);
+        datas.forEach(data => {
+          tracks = [data,...tracks]
+        }); 
+        console.log('track', tracks)
 			}).catch(error => {
 				console.log(error);
 				return [];
 			});
   })
 
-
+  //console.log('currentTrack',currentTrack)
+  let display = true
 </script>
 
 <main>
-  {#if tracks}
-    <!--Only show the first track with a like and dislike button-->
-    <div>
-      <h1>{currentTrack.title}</h1>
-      <audio id="current-track" src={currentTrack.url} controls autoplay/>
-      <br>
-      <!--on click call the getTracks function -->
-      <button on:click={() => getTracks()} >Like</button>
-      <button on:click={() => deleteTrack(currentTrack.path)}>Dislike</button>
-    </div>
+  {#if display}
+    {tracks}
+    {#each tracks as track}
+        <div>
+          <h1>{track?.title}</h1>
+          <audio controls id="current-track">
+            <source src={track?.url} type="audio/mpeg">
+          </audio>
+          <button on:click={() => getTracks()} >Like</button>
+          <button on:click={() => deleteTrack(track?.path)}>Delete</button>
+        </div>
+    {/each}
 	{/if}
 </main>
 
