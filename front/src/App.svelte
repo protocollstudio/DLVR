@@ -1,9 +1,16 @@
 <script>
 	import { onMount } from "svelte";
 
+  import { Swiper, SwiperSlide } from 'swiper/svelte';
+  import SwiperCore, { Mousewheel, Pagination } from 'swiper';
+  import 'swiper/css';
+  import 'swiper/css/pagination';
+  SwiperCore.use([Mousewheel, Pagination]);
+
+  import Tracks from "./Tracks.svelte";
+
   let apiUrl = "http://localhost:8000/api/"
   let tracks = []
-  let currentTrack = []
   // when called make a DEL request to api/tracks/ with an object containing the track path
   const deleteTrack = (path) => {
     /*fetch(`http://localhost:4000/api/tracks/${path}`, {
@@ -65,39 +72,25 @@
 
   //console.log('currentTrack',currentTrack)
   let display = true
+
 </script>
 
 <main>
-  {#if display}
-    {tracks}
-    {#each tracks as track}
-        <div>
-          <h1>{track?.title}</h1>
-          <audio controls id="current-track">
-            <source src={track?.url} type="audio/mpeg">
-          </audio>
-          <button on:click={() => getTracks()} >Like</button>
-          <button on:click={() => deleteTrack(track?.path)}>Delete</button>
-        </div>
-    {/each}
-	{/if}
+  <Tracks tracks={tracks} />
 </main>
 
 <style>
+  
   :root {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: rgb(235, 230, 230);
   }
 
   main {
     text-align: center;
     padding: 1em;
     margin: 0 auto;
-  }
-
-  img {
-    height: 16rem;
-    width: 16rem;
   }
 
   h1 {
