@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
     # Third party
     "rest_framework",
+
     # Local apps
     "tracks.apps.TracksConfig",
     "api.apps.ApiConfig",
@@ -128,3 +130,11 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # My settings
+
+STATIC_ROOT = BASE_DIR / "static/"
+STATICFILES_DIRS = [
+        BASE_DIR / "staticfiles",
+        ]
+
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "media/"
