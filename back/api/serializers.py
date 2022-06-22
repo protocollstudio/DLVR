@@ -5,4 +5,4 @@ from tracks.models import Track
 class TrackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Track
-        fields = ("title", "url", "path", "artwork", "audio_file", "likes", "dislikes")
+        fields = ("ID", "title", "url", "path", "artwork", "audio_file", "likes", "dislikes")
