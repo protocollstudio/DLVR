@@ -9,7 +9,7 @@
 
   import Tracks from "./Tracks.svelte";
 
-  let apiUrl = "http://localhost:8000/api/"
+  const apiUrl = import.meta.env.VITE_API_URL
   let tracks = []
   // when called make a DEL request to api/tracks/ with an object containing the track path
   const deleteTrack = (path) => {
@@ -76,7 +76,7 @@
 </script>
 
 <main>
-  <Tracks tracks={tracks} />
+  <Tracks apiUrl={apiUrl} tracks={tracks}/>
 </main>
 
 <style>
