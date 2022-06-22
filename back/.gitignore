@@ -1,3 +1,7 @@
+# DLVR
+*.mp3
+*.jpg
+
 # Django #
 *.log
 *.pot
