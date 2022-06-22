@@ -10,22 +10,25 @@ from django.http import HttpResponse
 class TrackAPIView(generics.ListAPIView):
     queryset = Track.objects.all()
     serializer_class = TrackSerializer
+    lookup_field = "ID"
 
 
 class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Track.objects.all()
     serializer_class = TrackSerializer
+    lookup_field = "ID"
 
 
 @api_view(["GET"])
-def add_like(request, pk):
+def add_like(request, uuid):
     try:
-        track = Track.objects.get(pk=pk)
+        track = Track.objects.get(uuid=uuid)
     except:
         return HttpResponse(status=404)
 
     if request.method == "GET":
         serializer = TrackSerializer(track)
+        lookup_field = "ID"
         track.likes += 1
         track.save()
         return Response(serializer.data)
@@ -33,14 +36,15 @@ def add_like(request, pk):
 
 
 @api_view(["GET"])
-def add_dislike(request, pk):
+def add_dislike(request, uuid):
     try:
-        track = Track.objects.get(pk=pk)
+        track = Track.objects.get(uuid=uuid)
     except:
         return HttpResponse(status=404)
 
     if request.method == "GET":
         serializer = TrackSerializer(track)
+        lookup_field = "ID"
         track.dislikes += 1
         track.save()
         return Response(serializer.data)
