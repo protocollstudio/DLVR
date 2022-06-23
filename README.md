@@ -2,12 +2,18 @@
 
 ## Back
 
-`$ make`
-to read availabe commands.
+1. Go to _back_ directory.
+2. Activate virtual environment.
+3. Rune `make` command to read available commands.
+
+```
+cd back
+source ./env/bin/activate
+make
+```
 
 ```
 Available commands: 
-	make env : setup the virtual environment
 	make install: install requirements
 	make migrations : make migrations & migrate
 	make adminuser : create a superuser to access django admin
