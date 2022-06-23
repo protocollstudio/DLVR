@@ -2,15 +2,20 @@
 
 ## Back
 
-To launch the back
-> pip install -r requirements.txt    
-> python manage.py makemigrations    
-> python manage.py migrate    
-> python manage.py createsuperuser    
-> python manage.py runserver    
+`$ make`
+to read availabe commands.
+
+```
+Available commands: 
+	make env : setup the virtual environment
+	make install: install requirements
+	make migrations : make migrations & migrate
+	make adminuser : create a superuser to access django admin
+	make run : launch django on localhost:8000
+```
 
 
-Routes 
+Routes :
 - api/tracks : liste les tracks
 - api/track/1 : détails d'une track
 - api/track/1/like : ajoute un like
